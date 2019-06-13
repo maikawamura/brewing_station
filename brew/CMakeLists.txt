@@ -5,16 +5,16 @@ file( GLOB_RECURSE SRC_REC     "src/*.cpp" )
 file( GLOB_RECURSE INL_REC     "include/*.inl" )
 file( GLOB_RECURSE INCLUDE_REC "include/*.h" )
 
-set( CAULDRON_FILES ${CAULDRON_FILES} ${SRC_REC} )
-set( CAULDRON_FILES ${CAULDRON_FILES} ${INL_REC} )
-set( CAULDRON_FILES ${CAULDRON_FILES} ${INCLUDE_REC} )
+set( BREW_FILES ${BREW_FILES} ${SRC_REC} )
+set( BREW_FILES ${BREW_FILES} ${INL_REC} )
+set( BREW_FILES ${BREW_FILES} ${INCLUDE_REC} )
 
 #status updates
 message( STATUS "---------------------------------------" )
-message( STATUS "cauldron_native files:" )
+message( STATUS "brew files:" )
 message( STATUS "---------------------------------------" )
 
-foreach(SourceFile ${CAULDRON_FILES})
+foreach(SourceFile ${BREW_FILES})
 	message(STATUS ${SourceFile})
 endforeach()
 
@@ -23,7 +23,7 @@ message( STATUS "---------------------------------------" )
 #include directories
 include_directories( "include" )
 
-add_library( cauldron_native ${CAULDRON_FILES} )
+add_executable( brew ${BREW_FILES} )
 
 #add solution filters
-source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CAULDRON_FILES} )
+source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${BREW_FILES} )
