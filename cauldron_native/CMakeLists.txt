@@ -23,5 +23,7 @@ message( STATUS "---------------------------------------" )
 #include directories
 include_directories("include")
 
-
 add_library( cauldron_native ${CAULDRON_FILES} )
+
+#add solution filters
+source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CAULDRON_FILES} )
