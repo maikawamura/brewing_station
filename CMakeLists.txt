@@ -12,3 +12,7 @@ set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" )
 set ( VALID_BUILD_TYPES "Release" "Debug" )
 
 add_subdirectory ( cauldron_native )
+
+include( CTest )
+
+add_test( "testTODO" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}" )
