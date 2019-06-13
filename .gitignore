@@ -1,4 +1,3 @@
-Build/
-bUILD/
 build/
-BUILD/
+lib/*
+bin/*

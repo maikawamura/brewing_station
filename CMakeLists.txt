@@ -1,14 +1,14 @@
-cmake_minimum_required( VERSION "3.15.0" )
+cmake_minimum_required ( VERSION 3.15.0 )
 
-project( "brewing_station" )
+project( brewing_station )
 
-add_executable( "${PROJECT_NAME}" "main.cpp" )
+message(STATUS "CMAKE_SYSTEM_VERSION = ${CMAKE_SYSTEM_VERSION}")
 
-install( TARGETS "${PROJECT_NAME}" DESTINATION bin )
+#target output directory
+set ( CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib" )
+set ( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib" )
+set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" )
 
-install( FILES "main.cpp" DESTINATION src )
-#ADD_SUBDIRECTORY( src )
+set ( VALID_BUILD_TYPES "Release" "Debug" )
 
-include( CTest )
-
-add_test( "test1" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}" )
+add_subdirectory ( cauldron_native )
