@@ -1,0 +1,52 @@
+cmake_minimum_required ( VERSION 3.15.0 )
+
+MACRO ( add_brewing_station_library SUB_LIBRARY_NAME )
+    file( GLOB_RECURSE SRC_REC     "src/*.cpp" )
+    file( GLOB_RECURSE INL_REC     "inl/*.inl" )
+    file( GLOB_RECURSE INCLUDE_REC "include/*.h" )
+
+    set( SUB_FILES ${SUB_FILES} ${SRC_REC} )
+    set( SUB_FILES ${SUB_FILES} ${INL_REC} )
+    set( SUB_FILES ${SUB_FILES} ${INCLUDE_REC} )
+    
+    add_library( ${SUB_LIBRARY_NAME} ${SUB_FILES} )
+    
+    set_target_properties( ${SUB_LIBRARY_NAME} PROPERTIES FOLDER "libraries" )
+    
+    source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SUB_FILES} )
+    
+    include_directories( "include" )
+
+    message( STATUS "---------------------------------------" )
+    message( STATUS "${SUB_LIBRARY_NAME}:" )  
+    message( STATUS "dependens on:" )  
+
+    #set ( SUB_LIBRARY_DEPENDENCY_LIST_ ${SUB_LIBRARY_DEPENDENCY_LIST} ${ARGN} )
+    foreach (SUB_DEPENDENCY ${ARGN} )
+        add_dependencies( ${SUB_LIBRARY_NAME} ${SUB_DEPENDENCY} )
+        include_directories( "../${SUB_DEPENDENCY}/include" )
+        message( STATUS "--- ${SUB_DEPENDENCY}" )
+    endforeach()
+    message( STATUS "files:" )
+
+    foreach( SourceFile ${SUB_FILES} )
+        message( STATUS ${SourceFile} )
+    endforeach()
+
+    message( STATUS "---------------------------------------" )
+ENDMACRO()
+
+###################################################################
+###################################################################
+
+message( STATUS "---------------------------------------" )
+message( STATUS "LIBRARIES: ")
+message( STATUS "---------------------------------------" )
+
+#libraries
+#this order should dictate dependency as reference
+add_subdirectory( math )
+add_subdirectory( thread_employer )
+add_subdirectory( renderer )
+add_subdirectory( engine )
+add_subdirectory( cauldron_native )

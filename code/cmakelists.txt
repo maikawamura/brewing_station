@@ -1,6 +1,6 @@
 cmake_minimum_required ( VERSION 3.15.0 )
 
-project( BREWINGSTATIOn )
+project( brewing_station )
 
 message(STATUS "CMAKE_SYSTEM_VERSION = ${CMAKE_SYSTEM_VERSION}")
 
@@ -26,24 +26,21 @@ set( CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE )
  #   CACHE STRING "List of supported configurations.")
 
 
-#add projects
-add_subdirectory ( brew )
-add_subdirectory ( cauldron_native )
 
-#set( CAULDRON_BINARY_DIR  )
-include_external_msproject( cauldron "${CMAKE_CURRENT_SOURCE_DIR}/cauldron/cauldron.csproj" )
+
+add_subdirectory( apps )
+add_subdirectory( libraries )
 
 
 #set startup project
 set_property( DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT "${BREWINGSTATION_STARTUP_PROJECT}" )
 
-#set install targets
-install( TARGETS brew DESTINATION "bin/brew" )
+
 #install( DIRECTORY "${CMAKE_BINARY_DIR}/bin/Debug/" DESTINATION "bin/cauldron/Debug" ) TODO
 #install( DIRECTORY "${CMAKE_BINARY_DIR}/bin/Release/" DESTINATION "bin/cauldron" )
 
-include( CTest )
+#include( CTest )
 
-add_test( "testTODO" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}" )
+#add_test( "testTODO" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}" )
 
 include( CPack )
