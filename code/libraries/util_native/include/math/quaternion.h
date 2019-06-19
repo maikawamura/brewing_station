@@ -3,4 +3,5 @@
 
 
 
+#include "../inl/math/quaternion.inl"
 #endif

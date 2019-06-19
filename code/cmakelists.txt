@@ -1,6 +1,15 @@
 cmake_minimum_required ( VERSION 3.15.0 )
 
-project( brewing_station )
+project( "brewing_station_${BREWING_STATION_TARGET_PLATFORM}" )
+message (${CMAKE_CXX_FLAGS})
+
+if ( ${BREWING_STATION_TARGET_PLATFORM} MATCHES "windows" )
+    set ( CMAKE_CXX_FLAGS "/D_WINDOWS" )
+elseif( ${BREWING_STATION_TARGET_PLATFORM} MATCHES "android" )
+    set ( CMAKE_CXX_FLAGS "/D_ANDROID" )
+endif()
+
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17" )
 
 message(STATUS "CMAKE_SYSTEM_VERSION = ${CMAKE_SYSTEM_VERSION}")
 
@@ -9,31 +18,17 @@ set ( CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib" )
 set ( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib" )
 set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin" )
 
-set ( VALID_BUILD_TYPES "Release" "Debug" ) #TODO ? 
+#set ( VALID_BUILD_TYPES "Release" "Debug" ) #TODO ? 
+#set( CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE )
 
-set( BREWINGSTATION_TARGET_PLATFORM "Windows" CACHE STRING "What platform are you working on?" )
-set_property( CACHE BREWINGSTATION_TARGET_PLATFORM PROPERTY STRINGS "Windows" "AndroidTODO" )
-
-set( BREWINGSTATION_STARTUP_PROJECT "cauldron" CACHE STRING "Choose your startup project for convenience." )
-set_property( CACHE BREWINGSTATION_STARTUP_PROJECT PROPERTY STRINGS "cauldron" "brew" ) #TODO doesn't work yet
 
 set_property( GLOBAL PROPERTY USE_FOLDERS ON )
-
-set( CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE )
-
-#set( CMAKE_CONFIGURATION_TYPES "Debug;Release" ) 
-#set( CMAKE_CONFIGURATION_TYPES "${CMAKE_CONFIGURATION_TYPES}" 
- #   CACHE STRING "List of supported configurations.")
-
-
-
 
 add_subdirectory( apps )
 add_subdirectory( libraries )
 
-
 #set startup project
-set_property( DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT "${BREWINGSTATION_STARTUP_PROJECT}" )
+set_property( DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT "${BREWING_STATION_STARTUP_PROJECT}" )
 
 
 #install( DIRECTORY "${CMAKE_BINARY_DIR}/bin/Debug/" DESTINATION "bin/cauldron/Debug" ) TODO

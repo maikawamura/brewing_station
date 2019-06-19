@@ -3,4 +3,5 @@
 
 
 
+#include "../inl/math/vector.inl"
 #endif

@@ -17,23 +17,18 @@ MACRO ( add_brewing_station_library SUB_LIBRARY_NAME )
     
     include_directories( "include" )
 
-    message( STATUS "---------------------------------------" )
-    message( STATUS "${SUB_LIBRARY_NAME}:" )  
-    message( STATUS "dependens on:" )  
+    message( STATUS "- ${SUB_LIBRARY_NAME}" ) 
 
-    #set ( SUB_LIBRARY_DEPENDENCY_LIST_ ${SUB_LIBRARY_DEPENDENCY_LIST} ${ARGN} )
+    if ( ${ARGC} GREATER "1" ) 
+        message( STATUS "- - - - - dependencies:" )  
+    endif()
+    
     foreach (SUB_DEPENDENCY ${ARGN} )
         add_dependencies( ${SUB_LIBRARY_NAME} ${SUB_DEPENDENCY} )
         include_directories( "../${SUB_DEPENDENCY}/include" )
-        message( STATUS "--- ${SUB_DEPENDENCY}" )
-    endforeach()
-    message( STATUS "files:" )
-
-    foreach( SourceFile ${SUB_FILES} )
-        message( STATUS ${SourceFile} )
+        message( STATUS "- - - - - - - ${SUB_DEPENDENCY}" )
     endforeach()
 
-    message( STATUS "---------------------------------------" )
 ENDMACRO()
 
 ###################################################################
@@ -41,12 +36,13 @@ ENDMACRO()
 
 message( STATUS "---------------------------------------" )
 message( STATUS "LIBRARIES: ")
-message( STATUS "---------------------------------------" )
 
 #libraries
 #this order should dictate dependency as reference
-add_subdirectory( math )
+add_subdirectory( util_native )
 add_subdirectory( thread_employer )
 add_subdirectory( renderer )
 add_subdirectory( engine )
 add_subdirectory( cauldron_native )
+
+message( STATUS "---------------------------------------" )

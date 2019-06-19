@@ -3,4 +3,6 @@
 
 
 
+
+#include "../inl/math/matrix.inl"
 #endif // !MATRIX_H

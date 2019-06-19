@@ -17,22 +17,30 @@ MACRO ( add_brewing_station_app SUB_APP_NAME )
     
     include_directories( "include" )
 
-    message( STATUS "---------------------------------------" )
-    message( STATUS "${SUB_APP_NAME}:" )  
-    message( STATUS "dependens on:" )  
+    message( STATUS "- ${SUB_APP_NAME}" ) 
+
+    if ( ${ARGC} GREATER "1" ) 
+        message( STATUS "- - - - - dependencies:" )  
+    endif()
 
     foreach (SUB_DEPENDENCY ${ARGN} )
         add_dependencies( ${SUB_APP_NAME} ${SUB_DEPENDENCY} )
         include_directories( "../${SUB_DEPENDENCY}/include" )
-        message( STATUS "--- ${SUB_DEPENDENCY}" )
-    endforeach()
-    message( STATUS "files:" )
-
-    foreach( SourceFile ${SUB_FILES} )
-        message( STATUS ${SourceFile} )
+        message( STATUS "- - - - - - - ${SUB_DEPENDENCY}" )
     endforeach()
 
-    message( STATUS "---------------------------------------" )
+ENDMACRO()
+
+MACRO ( include_external_brewing_station_managed_app SUB_APP_NAME )
+    include_external_msproject( ${SUB_APP_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/${SUB_APP_NAME}.csproj" )
+    set_target_properties( ${SUB_APP_NAME} PROPERTIES FOLDER "apps" )
+
+   message( STATUS "- ${SUB_APP_NAME}" )  
+
+ENDMACRO()
+
+MACRO ( add_brewing_station_managed_app SUB_APP_NAME )
+
 ENDMACRO()
 
 ###################################################################
@@ -40,8 +48,17 @@ ENDMACRO()
 
 message( STATUS "---------------------------------------" )
 message( STATUS "APPLICATIONS: ")
-message( STATUS "---------------------------------------" )
 
 #applications
 add_subdirectory( brew )
-add_subdirectory( cauldron )
+
+if ( "${BREWING_STATION_TARGET_PLATFORM}" MATCHES "windows" )
+    add_subdirectory( cauldron )
+    add_subdirectory( windows_only_test )
+endif()
+
+if ( "${BREWING_STATION_TARGET_PLATFORM}" MATCHES "android" )
+    add_subdirectory( android_only_test )
+endif()
+
+message( STATUS "---------------------------------------" )
