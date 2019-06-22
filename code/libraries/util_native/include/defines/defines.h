@@ -9,4 +9,12 @@
   #endif
 #endif
 
+#ifndef EXPORT
+  #ifdef _WINDOWS
+    #define EXPORT extern "C" __declspec(dllexport)
+  #elif _ANDROID
+    #define EXPORT 
+  #endif
+#endif
+
 #endif // !UTIL_NATIVE_DEFINES_H

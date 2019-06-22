@@ -40,9 +40,9 @@ message( STATUS "LIBRARIES: ")
 #libraries
 #this order should dictate dependency as reference
 add_subdirectory( util_native )
-add_subdirectory( thread_employer )
+add_subdirectory( threading_native )
 add_subdirectory( renderer )
-add_subdirectory( engine )
+add_subdirectory( engine_native )
 add_subdirectory( cauldron_native )
 
 message( STATUS "---------------------------------------" )

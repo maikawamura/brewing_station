@@ -54,7 +54,7 @@ add_subdirectory( brew )
 
 if ( "${BREWING_STATION_TARGET_PLATFORM}" MATCHES "windows" )
     add_subdirectory( cauldron )
-    add_subdirectory( windows_only_test )
+    add_subdirectory( windows_playground )
 endif()
 
 if ( "${BREWING_STATION_TARGET_PLATFORM}" MATCHES "android" )
