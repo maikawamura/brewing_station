@@ -25,7 +25,9 @@ MACRO ( add_brewing_station_library SUB_LIBRARY_NAME )
     
     foreach (SUB_DEPENDENCY ${ARGN} )
         add_dependencies( ${SUB_LIBRARY_NAME} ${SUB_DEPENDENCY} )
-        include_directories( "../${SUB_DEPENDENCY}/include" )
+        include_directories( "${BREWING_STATION_LIBRARY_DIR}/${SUB_DEPENDENCY}/include" )
+        target_link_libraries( ${SUB_APP_NAME} ${SUB_DEPENDENCY} )
+        
         message( STATUS "- - - - - - - ${SUB_DEPENDENCY}" )
     endforeach()
 

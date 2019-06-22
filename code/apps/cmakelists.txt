@@ -16,7 +16,8 @@ MACRO ( add_brewing_station_app SUB_APP_NAME )
     source_group( TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SUB_FILES} )
     
     include_directories( "include" )
-
+    link_directories( "${BREWING_STATION_LIBRARY_OUTPUT_DIRECTORY}" )
+    
     message( STATUS "- ${SUB_APP_NAME}" ) 
 
     if ( ${ARGC} GREATER "1" ) 
@@ -25,7 +26,9 @@ MACRO ( add_brewing_station_app SUB_APP_NAME )
 
     foreach (SUB_DEPENDENCY ${ARGN} )
         add_dependencies( ${SUB_APP_NAME} ${SUB_DEPENDENCY} )
-        include_directories( "../${SUB_DEPENDENCY}/include" )
+        include_directories( "${BREWING_STATION_LIBRARY_DIR}/${SUB_DEPENDENCY}/include" )
+        target_link_libraries( ${SUB_APP_NAME} ${SUB_DEPENDENCY} )
+        
         message( STATUS "- - - - - - - ${SUB_DEPENDENCY}" )
     endforeach()
 
